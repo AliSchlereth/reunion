@@ -165,6 +165,5 @@ class ReunionTest < Minitest::Test
     reunion.add_activity(activity_2)
 
     assert_equal "Ali: 9\n" + "Sal: -9\n" + "Mike: 0\n", reunion.print_summary
-
   end
 end
