@@ -25,9 +25,22 @@ class Reunion
     end
   end
 
+  def print_summary
+    printable = translate_summary
+    puts printable
+    printable
+  end
+
+  def translate_summary
+    breakout.reduce("") do |result, (participant, balance)|
+       result += "#{participant}: #{balance}\n"
+    end
+  end
+
   def combine_activity_balances(result, activity)
     activity.owed.each_pair do |participant, owes|
       result[participant] += owes
     end
   end
+
 end

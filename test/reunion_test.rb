@@ -104,4 +104,23 @@ class ReunionTest < Minitest::Test
     assert_equal -9, balance["Sal"]
     assert_equal 0, balance["Mike"]
   end
+
+  def test_print_summary_prints_breakout_info
+    reunion = Reunion.new("San Fran")
+
+    activity = Activity.new("Hill Walking")
+    activity.add_participant("Ali", 4)
+    activity.add_participant("Sal", 10)
+
+    activity_2 = Activity.new("Golden Gate")
+    activity_2.add_participant("Ali", 6)
+    activity_2.add_participant("Sal", 18)
+    activity_2.add_participant("Mike", 12)
+
+    reunion.add_activity(activity)
+    reunion.add_activity(activity_2)
+
+    assert_equal "Ali: 9\n" + "Sal: -9\n" + "Mike: 0\n", reunion.print_summary
+
+  end
 end
