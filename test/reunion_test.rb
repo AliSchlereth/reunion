@@ -3,6 +3,8 @@ require 'minitest/test'
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/reunion'
+require './lib/activity'
+
 require "pry"
 
 class ReunionTest < Minitest::Test
@@ -12,5 +14,22 @@ class ReunionTest < Minitest::Test
 
     assert_instance_of Reunion, reunion
     assert_equal "Denver", reunion.name
+  end
+
+  def test_reunion_takes_activities
+    reunion = Reunion.new("Denver")
+
+    assert_equal [], reunion.activities
+  end
+
+  def test_add_activity_adds_activity_to_activities
+    reunion = Reunion.new("Denver")
+    activity = Activity.new("Movie")
+    activity.add_participant("Ali", 12)
+    activity.add_participant("Sal", 12)
+
+    reunion.add_activity(activity)
+
+    assert_equal activity, reunion.activities.last
   end
 end
