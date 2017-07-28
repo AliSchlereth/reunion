@@ -105,6 +105,32 @@ class ReunionTest < Minitest::Test
     assert_equal 0, balance["Mike"]
   end
 
+  def test_combine_activity_balances_returns_result_hash
+    reunion = Reunion.new("San Fran")
+
+    activity = Activity.new("Hill Walking")
+    activity.add_participant("Ali", 4)
+    activity.add_participant("Sal", 10)
+
+    balance = reunion.combine_activity_balances(Hash.new(0), activity)
+
+    assert_equal ({"Ali"=> 3, "Sal"=> -3}), balance
+  end
+
+  def test_combine_activity_balances_returns_result_hash
+    reunion = Reunion.new("San Fran")
+
+    activity = Activity.new("Hill Walking")
+    activity.add_participant("Ali", 4)
+    activity.add_participant("Sal", 10)
+
+    pre_result = Hash.new(0).merge({"Ali"=> 2, "Mike"=> -3})
+    balance = reunion.combine_activity_balances(pre_result, activity)
+
+    assert_equal ({"Ali"=> 5, "Sal"=> -3, "Mike" => -3}), balance
+  end
+
+
   def test_print_summary_prints_breakout_info
     reunion = Reunion.new("San Fran")
 

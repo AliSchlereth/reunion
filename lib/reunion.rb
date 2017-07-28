@@ -41,6 +41,7 @@ class Reunion
     activity.owed.each_pair do |participant, owes|
       result[participant] += owes
     end
+    result
   end
 
 end
