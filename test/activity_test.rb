@@ -18,4 +18,15 @@ class ActivityTest < Minitest::Test
     assert_instance_of Hash, activity.participants
     assert activity.participants.empty?
   end
+
+  def test_add_participant_adds_to_participants
+    activity = Activity.new("Ball Game")
+
+    assert activity.participants.empty?
+
+    activity.add_participant("Ali", 10)
+
+    refute activity.participants.empty?
+    assert_equal 10, activity.participants["Ali"]
+  end
 end
