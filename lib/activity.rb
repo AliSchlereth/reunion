@@ -19,4 +19,8 @@ class Activity
     end
   end
 
+  def split
+    total_cost / participants.length
+  end
+
 end

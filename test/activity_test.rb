@@ -49,4 +49,14 @@ class ActivityTest < Minitest::Test
 
     assert_equal 30, activity.total_cost
   end
+
+  def test_split_divides_total_cost_by_number_of_participants
+    activity = Activity.new("Movie")
+
+    activity.add_participant("Ali", 12)
+    activity.add_participant("Sal", 12)
+    activity.add_participant("Mike", 21)
+
+    assert_equal 15, activity.split
+  end
 end
