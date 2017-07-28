@@ -130,6 +130,24 @@ class ReunionTest < Minitest::Test
     assert_equal ({"Ali"=> 5, "Sal"=> -3, "Mike" => -3}), balance
   end
 
+  def test_translate_summary_returns_aggregated_string
+    reunion = Reunion.new("San Fran")
+
+    activity = Activity.new("Hill Walking")
+    activity.add_participant("Ali", 4)
+    activity.add_participant("Sal", 10)
+
+    activity_2 = Activity.new("Golden Gate")
+    activity_2.add_participant("Ali", 6)
+    activity_2.add_participant("Sal", 18)
+    activity_2.add_participant("Mike", 12)
+
+    reunion.add_activity(activity)
+    reunion.add_activity(activity_2)
+
+    assert_equal "Ali: 9\n" + "Sal: -9\n" + "Mike: 0\n", reunion.translate_summary
+  end
+
 
   def test_print_summary_prints_breakout_info
     reunion = Reunion.new("San Fran")
