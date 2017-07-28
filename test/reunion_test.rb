@@ -39,8 +39,8 @@ class ReunionTest < Minitest::Test
     activity.add_participant("Ali", 12)
     activity.add_participant("Sal", 12)
     activity_2 = Activity.new("Lunch")
-    activity.add_participant("Ali", 12)
-    activity.add_participant("Sal", 12)
+    activity_2.add_participant("Ali", 12)
+    activity_2.add_participant("Sal", 12)
 
     assert_equal 0, reunion.activities.length
 
@@ -56,12 +56,52 @@ class ReunionTest < Minitest::Test
     activity.add_participant("Ali", 15)
     activity.add_participant("Sal", 5)
     activity_2 = Activity.new("Golden Gate")
-    activity.add_participant("Ali", 8)
-    activity.add_participant("Sal", 12)
+    activity_2.add_participant("Ali", 8)
+    activity_2.add_participant("Sal", 12)
 
     reunion.add_activity(activity)
     reunion.add_activity(activity_2)
 
     assert_equal 40, reunion.total_cost
+  end
+
+  def test_reunion_breakout_calculates_remainder_owed
+    reunion = Reunion.new("San Fran")
+    activity = Activity.new("Hill Walking")
+    activity.add_participant("Ali", 15)
+    activity.add_participant("Sal", 5)
+    activity_2 = Activity.new("Golden Gate")
+    activity_2.add_participant("Ali", 8)
+    activity_2.add_participant("Sal", 12)
+
+    reunion.add_activity(activity)
+    reunion.add_activity(activity_2)
+
+    balance = reunion.breakout
+
+    assert_equal -3, balance["Ali"]
+    assert_equal 3, balance["Sal"]
+  end
+
+  def test_reunion_breakout_calculates_remainder_owed
+    reunion = Reunion.new("San Fran")
+
+    activity = Activity.new("Hill Walking")
+    activity.add_participant("Ali", 4)
+    activity.add_participant("Sal", 10)
+
+    activity_2 = Activity.new("Golden Gate")
+    activity_2.add_participant("Ali", 6)
+    activity_2.add_participant("Sal", 18)
+    activity_2.add_participant("Mike", 12)
+
+    reunion.add_activity(activity)
+    reunion.add_activity(activity_2)
+
+    balance = reunion.breakout
+
+    assert_equal 9, balance["Ali"]
+    assert_equal -9, balance["Sal"]
+    assert_equal 0, balance["Mike"]
   end
 end
