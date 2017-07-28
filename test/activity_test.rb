@@ -59,4 +59,14 @@ class ActivityTest < Minitest::Test
 
     assert_equal 15, activity.split
   end
+
+  def test_owed_calculates_difference_btwn_paid_and_split
+    activity = Activity.new("Movie")
+
+    activity.add_participant("Ali", 12)
+    activity.add_participant("Sal", 12)
+    activity.add_participant("Mike", 21)
+
+    assert_equal ({"Ali" => 3, "Sal" => 3, "Mike" => -6}), activity.owed
+  end
 end
