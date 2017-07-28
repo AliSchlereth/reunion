@@ -1,3 +1,4 @@
+
 class Activity
 
   attr_reader :name,
@@ -10,6 +11,12 @@ class Activity
 
   def add_participant(name, spent)
     @participants[name] += spent
+  end
+
+  def total_cost
+    spent = @participants.reduce(0) do |result, (participant, spent)|
+      result += spent
+    end
   end
 
 end

@@ -2,6 +2,7 @@ require 'minitest'
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/activity'
+require "pry"
 
 class ActivityTest < Minitest::Test
 
@@ -28,5 +29,24 @@ class ActivityTest < Minitest::Test
 
     refute activity.participants.empty?
     assert_equal 10, activity.participants["Ali"]
+  end
+
+  def test_total_cost_sums_up_total_folks_spent
+    activity = Activity.new("Hike")
+
+    activity.add_participant("Ali", 8)
+    activity.add_participant("Sal", 12)
+
+    assert_equal 20, activity.total_cost
+  end
+
+  def test_total_cost_sums_up_total_3_participants
+    activity = Activity.new("Hike")
+
+    activity.add_participant("Ali", 8)
+    activity.add_participant("Sal", 12)
+    activity.add_participant("Mike", 10)
+
+    assert_equal 30, activity.total_cost
   end
 end
